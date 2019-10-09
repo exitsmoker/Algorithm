@@ -30,3 +30,7 @@ Algorithm
         `primeNumber`
     * Traveling Salesman Problem 2 v.2.ipynb
         `bruteForce` `permutation`
+    * NHNTest_insectsCards.java
+        `map` `bitwise`
+    * NHNTest_frequencyQueue.cpp
+        `queue` `stack`
