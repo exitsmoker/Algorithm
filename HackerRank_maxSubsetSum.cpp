@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+#include <vector>
+#include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -6,22 +9,42 @@ vector<string> split_string(string);
 int answer = 0;
 
 // Complete the maxSubsetSum function below.
-void go(int index, vector<int> arr, int subSummary, int* answer){
-    for (int i=index; i<arr.size(); i++){
-        int tempSummary = arr[i] + subSummary;
-        if(tempSummary >= *answer){
-            *answer = tempSummary;
+int maxSubsetSum(vector<int> arr) {
+    const int tempN = arr.size();
+    int maxArr[tempN];
+    int currentMaxArr = 0;
+
+    for (int i=0; i<arr.size(); i++){
+        if (i >= 2){
+            int tempMax = maxArr[i-2] + arr[i];
+            if(tempMax >= arr[i] && tempMax >= currentMaxArr){
+                maxArr[i] = tempMax;
+                currentMaxArr = tempMax;
+            }
+            if(arr[i] >= tempMax && arr[i] >= currentMaxArr){
+                maxArr[i] = arr[i];
+                currentMaxArr = arr[i];
+            }
+            if(currentMaxArr >= arr[i] && currentMaxArr >= tempMax) {
+                maxArr[i] = currentMaxArr;
+            }
         }
-        else if(i+2 >= arr.size()-1){
-            continue;
+        else if (i == 0){
+            maxArr[i] = arr[i];
+            currentMaxArr = arr[i];
         }
-        else {
-            go(i+2, arr, tempSummary, answer);
+        else if (i == 1){
+            if (currentMaxArr > arr[i]){
+                maxArr[i] = currentMaxArr;
+            }  
+            else {
+                maxArr[i] = arr[i];
+                currentMaxArr = arr[i];
+            }
         }
     }
-}
-int maxSubsetSum(vector<int> arr) {
-    go(0, arr, 0, &answer);
+    
+    answer = currentMaxArr;
     return answer;
 }
 
